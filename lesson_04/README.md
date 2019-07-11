@@ -42,6 +42,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 ```
 
+- STILL should NOT work as is
+
 ## Lesson 04
 
 So Lesson 03 still did not get our data did it?!?! What is the problem? Lets look at the code:

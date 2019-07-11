@@ -16,7 +16,9 @@
 
 <body>
   <h1>Lesson 02</h1>
-  <div id="content">No Data!</div>
+  <h3>Synchronous works, but Async is a must ...</h3>
+  Change the "httpGet" function to async... (see README.md)<br>
+  <div id="content"></div>
   <script>
     /**
     * theUrl [string] : url resource needed
@@ -30,7 +32,7 @@
     }
 
     var dataDiv = document.getElementById("content");           // change true to false and see what happens
-    var data = httpGet('http://terrywgriffin.com/lessons/lesson_02/colors.json',true)
+    var data = httpGet('http://terrywgriffin.com/lessons/lesson_02/colors.json',false)
     console.log(data); 
     dataDiv.innerHTML = data;
 

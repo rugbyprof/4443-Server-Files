@@ -7,6 +7,7 @@
 ## Lesson 02
 
 - request `colors.json` file from server and display in console.
+- should NOT work as is
 - here is our function:
 
 ```js
@@ -24,5 +25,5 @@ function httpGet(theUrl,syncMethod) {
 
 - Notice I added sync method in the params.
 - This is because in class I did NOT notice it defaulted to synchronous (meaning wait for response) 
-- In `index.html` change `true` to `false` and see what happens.
+- In `index.html` change `false` to `true` and see what happens.
 - Also inspect the page (and see the "synchronous" error?)

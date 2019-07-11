@@ -10,17 +10,19 @@
 
 
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/pure-min.css"/>
     <link rel="icon" href="images/favicon.png" />
 </head>
 
 <body>
     
     <script src="js/jquery-3.4.1.min.js"></script>
+    
     <script>
         $(function () {
 
-            $('body').append('<h1>Lesson 09</h1>');
-            $('body').append('<h3>Ordered Striped Table</h3>');
+            $('body').append('<h1>Lesson 10</h1>');
+            $('body').append('<h3>Ordered Striped Table with colors!</h3>');
             // https://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects-by-property/979325#979325
             var sort_by = function (field, reverse, primer) {
 
@@ -44,7 +46,7 @@
                 $('body').append('<div id="t1"></div>');
                 
                 
-                var table = '<table id="tcolor">';
+                var table = '<table class="pure-table pure-table-bordered" id="tcolor">';
                 for (var i = 0; i < theads.length; i++) {
                     table += '<th>' + theads[i] + '</th>';
                 }
@@ -55,26 +57,22 @@
                             table += '<td>' + trows[i][key] + '</td>';
                         }
                     }
+                    // Adding new column here and grabbing color from json
+                    table += '<td style="background:'+trows[i]['html']+'"></td>';
                     table += '</tr>';
                 }
                 table += '</table>';
                 $('#t1').append(table);
 
-                // Change css when table is in dom!
-                //$( "tr:odd" ).css( "background-color", "#bbbbff" );
-
-                // What if we don't want to change all tables?
-                // Make sure table has an "id"
-                // But then we need to also select tbody
-                // Look at inspector to see why!
-                $( "#tcolor > tbody > tr:odd" ).css( "background-color", "#bbbbff" );
+                $( "#tcolor > tbody > tr:odd" ).css( "background-color", "#c0c0c0" );
 
             }
 
-            $.get("http://terrywgriffin.com/lessons/lesson_09/colors.json")
+            $.get("http://terrywgriffin.com/lessons/lesson_10/colors.json")
                 .done(function (data) {
                     data.sort(sort_by('name', false));
-                    buildTable(['html', 'name', 'rgb'], data);
+                    // Added extra column header ("example") for our colored column
+                    buildTable(['html', 'name', 'rgb', 'example'], data);
                 });
         });
     </script>

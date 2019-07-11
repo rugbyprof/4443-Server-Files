@@ -7,6 +7,7 @@
 ## Lesson 02
 
 - request `colors.json` file from server and display in console.
+- should NOT work as is
 - here is our function:
 
 ```js
@@ -41,3 +42,5 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // Your code to run since DOM is loaded and ready
 });
 ```
+
+- STILL should NOT work as is
