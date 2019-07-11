@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Color Picker</title>
+
+
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="icon" href="images/favicon.png" />
+</head>
+
+<body>
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script>
+    $(function() {
+      $('body').append('<h1>Lesson 05</h1>');
+      $('body').append('<h3>Getting JSON and Dumping jQuery as string</h3>');
+      $('body').append('<div id="content"></div>');
+      // https://api.jquery.com/jQuery.get/
+      $.get("http://terrywgriffin.com/lessons/lesson_05/colors.json")
+      .done(function (data) {
+        console.log(data);
+        // Since result is parsed as JSON into an object. I made it a string
+        // to print it out in the DIV easier using `stringify`
+        $("#content").html(JSON.stringify(data));
+      });
+    });
+  </script>
+</body>
+
+</html>
