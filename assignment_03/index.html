@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Color Picker</title>
+
+
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/pure-min.css" />
+    <link rel="icon" href="images/favicon.png" />
+
+    <style>
+        /* https://stackoverflow.com/questions/45536537/centering-in-css-grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 200px);
+            grid-gap: 10px;
+            grid-auto-rows: 100px;
+            justify-content: center;
+        }
+
+        .item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid black;
+        }
+
+        .data_label {
+            font-weight: bold;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        h1 {
+            grid-column-start: 1;
+            grid-row-start: 1;
+            grid-column-end: 3;
+        }
+
+        h3 {
+            grid-column-start: 1;
+
+            grid-row-start: 2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+
+    <script>
+        $(function () {
+
+            $('body').append('<section class="grid" id="head"></section>');
+            $('#head').append('<h1>Assignment 03</h1>');
+            $('#head').append('<h3>Using Grid!</h3>');
+            $('body').append('<section class="grid" id="colors"></section>');
+
+            /**
+             * https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
+             * 
+             */
+            function capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+
+            /**
+            * Input: Some string hex value: #AA00FF
+            * Returns: string [black,white]
+            * 
+            * You could alter the function to return: #000000 or #FFFFFF
+            */
+            function getContrastYIQ(hexcolor) {
+                hexcolor = hexcolor.replace("#", "");
+                var r = parseInt(hexcolor.substr(0, 2), 16);
+                var g = parseInt(hexcolor.substr(2, 2), 16);
+                var b = parseInt(hexcolor.substr(4, 2), 16);
+                var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+                return (yiq >= 128) ? '#000000' : '#FFFFFF';
+            }
+
+            /**
+             * labels [array] : array of string col heads
+             * row [json] : json array of data
+             * id [int]   : integer id
+             */
+            function build_card(labels, row, id) {
+                var card = '<div class="item" id="card-' + id + '">';
+                card += '<table>';
+                for (var j = 0; j < labels.length; j++) {
+                    label = labels[j];
+                    data = row[labels[j]];
+
+                    if (label == 'html') {
+                        data = data.toUpperCase();
+                    }
+
+                    if (label == 'name'){
+                        data = capitalizeFirstLetter(data);
+                    }
+
+                    card += '<tr><td class="data_label">' + capitalizeFirstLetter(label) + '</td><td> : </td><td> ' + data + '</td></tr>';
+                }
+                card += '</table></div>';
+                return card;
+            }
+
+            /**
+             * labels [array] : array of string col heads
+             * data [json] : json array of data
+             */
+            function load_grid(labels, data) {
+
+
+                for (var i = 0; i < data.length; i++) {
+                    var card = build_card(labels, data[i], i);
+                    $('#colors').append(card);
+                    var font_color = getContrastYIQ(data[i]['html']);
+                    $("#card-" + i).css("background-color", data[i]['html']);
+                    $("#card-" + i).css("color", font_color);
+                }
+            }
+
+            $.get("http://terrywgriffin.com/lessons/lesson_10/colors.json")
+                .done(function (data) {
+                    data.sort(function (a, b) {
+                        if (a.name < b.name) {
+                            return -1;
+                        }
+                        if (b.name < a.name) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                    // Added extra column header ("example") for our colored column
+                    load_grid(['html', 'name', 'rgb'], data);
+                });
+        });
+    </script>
+</body>
+
+</html>
