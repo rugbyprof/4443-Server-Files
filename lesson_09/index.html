@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Color Picker</title>
+
+
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="icon" href="images/favicon.png" />
+</head>
+
+<body>
+    
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script>
+        $(function () {
+
+            $('body').append('<h1>Lesson 09</h1>');
+            $('body').append('<h3>Ordered Striped Table</h3>');
+            // https://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects-by-property/979325#979325
+            var sort_by = function (field, reverse, primer) {
+
+                var key = primer ?
+                    function (x) { return primer(x[field]) } :
+                    function (x) { return x[field] };
+
+                reverse = !reverse ? 1 : -1;
+
+                return function (a, b) {
+                    return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+                }
+            }
+
+
+            /**
+             * theads [array] : array of string col heads
+             * trows [json] : json array of data
+             */
+            function buildTable(theads, trows) {
+                $('body').append('<div id="t1"></div>');
+                
+                
+                var table = '<table id="tcolor">';
+                for (var i = 0; i < theads.length; i++) {
+                    table += '<th>' + theads[i] + '</th>';
+                }
+                for (var i = 0; i < trows.length; i++) {
+                    table += '<tr>';
+                    for (var key in trows[i]) {
+                        if (trows[i].hasOwnProperty(key)) {
+                            table += '<td>' + trows[i][key] + '</td>';
+                        }
+                    }
+                    table += '</tr>';
+                }
+                table += '</table>';
+                $('#t1').append(table);
+
+                // Change css when table is in dom!
+                //$( "tr:odd" ).css( "background-color", "#bbbbff" );
+
+                // What if we don't want to change all tables?
+                // Make sure table has an "id"
+                // But then we need to also select tbody
+                // Look at inspector to see why!
+                $( "#tcolor > tbody > tr:odd" ).css( "background-color", "#bbbbff" );
+
+            }
+
+            $.get("http://terrywgriffin.com/lessons/lesson_09/colors.json")
+                .done(function (data) {
+                    data.sort(sort_by('name', false));
+                    buildTable(['html', 'name', 'rgb'], data);
+                });
+        });
+    </script>
+</body>
+
+</html>
