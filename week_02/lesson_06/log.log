@@ -1,0 +1,24 @@
+Array
+(
+    [first-name] => don
+    [last-name] => juan
+    [email] => don.juan@somewhere.com
+    [city] => san francisco
+    [state] => AL
+)
+Array
+(
+    [first-name] => don
+    [last-name] => juan
+    [email] => don.juan@somewhere.com
+    [city] => san francisco
+    [state] => AL
+)
+15/07/2019 04:04:5215/07/2019 04:04:52Array
+(
+    [first-name] => don
+    [last-name] => juan
+    [email] => don.juan@somewhere.com
+    [city] => san francisco
+    [state] => AL
+)

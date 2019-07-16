@@ -1,0 +1,53 @@
+{
+    "form_id":"reg_form",
+    "legend_label":"Register Fields",
+    "form_fields":[
+        {
+            "type":"text",
+            "id":"first-name",
+            "text":"First Name",
+            "div_class":"pure-u-1 pure-u-md-1-3",
+            "class":"pure-u-23-24"
+        },
+        {
+            "type":"text",
+            "id":"last-name",
+            "text":"Last Name",
+            "div_class":"pure-u-1 pure-u-md-1-3",
+            "class":"pure-u-23-24"
+        },
+        {
+            "type":"text",
+            "id":"email",
+            "text":"E-Mail",
+            "div_class":"pure-u-1 pure-u-md-1-3",
+            "class":"pure-u-23-24"
+        },
+        {
+            "type":"text",
+            "id":"city",
+            "text":"City",
+            "div_class":"pure-u-1 pure-u-md-1-3",
+            "class":"pure-u-23-24"
+        },
+        {
+            "type":"select",
+            "id":"state",
+            "options":"states.json",
+            "div_class":"pure-u-1 pure-u-md-1-3",
+            "class":"pure-u-23-24"
+        },
+        {
+            "type":"checkbox",
+            "id":"terms",
+            "text":" I've read the terms and conditions",
+            "class":"pure-checkbox"
+        },
+        {
+            "type":"button",
+            "id":"submit",
+            "text":"Submit",
+            "class":"pure-button pure-button-primary"
+        }
+    ]
+}

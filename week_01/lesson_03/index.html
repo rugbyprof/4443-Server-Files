@@ -33,7 +33,7 @@
     document.addEventListener("DOMContentLoaded", function(event) {
       console.log("DOM loaded")
       var dataDiv = document.getElementById("content");      // true means asynchronous and hope the DIV is there!
-      var data = httpGet('http://terrywgriffin.com/lessons/lesson_03/colors.json',true)
+      var data = httpGet('http://terrywgriffin.com/lessons/week_01/data/colors.json',true)
       console.log(data); 
       dataDiv.innerHTML = data;
     });
