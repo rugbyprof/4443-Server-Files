@@ -21,7 +21,7 @@
       $('body').append('<h3>Getting JSON and Dumping using jQuery as object</h3>');
       $('body').append('<div id="content"></div>');
       // https://api.jquery.com/jQuery.get/
-      $.get("http://terrywgriffin.com/lessons/lesson_06/colors.json")
+      $.get("http://terrywgriffin.com/lessons/week_01/data/colors.json")
         .done(function (data) {
           for (var i = 0; i < data.length; i++) {
             $("#content").append(data[i].name + ' , ' + data[i].html + ' , ');

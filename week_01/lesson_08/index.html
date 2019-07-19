@@ -75,7 +75,7 @@
                 $('#t1').append(table);
             }
 
-            $.get("http://terrywgriffin.com/lessons/lesson_08/colors.json")
+            $.get("http://terrywgriffin.com/lessons/week_01/data/colors.json")
                 .done(function (data) {
                     data.sort(sort_by('name', false));
                     buildTable1(['html', 'name', 'rgb'], data);
