@@ -35,7 +35,11 @@
 
                         <div class="pure-u-1 pure-u-md-1-3">
                             <label for="email">E-Mail</label>
+<<<<<<< HEAD
                             <input id="email" class="pure-u-23-24" type="email" value="tom@gmail.com">
+=======
+                            <input id="email" class="pure-u-23-24" type="email">
+>>>>>>> 0ef5c58972ca5f24dd008b858b970caeac857826
                         </div>
 
                         <div class="pure-u-1 pure-u-md-1-3">
@@ -44,11 +48,14 @@
                         </div>
 
                         <div class="pure-u-1 pure-u-md-1-3">
+<<<<<<< HEAD
                             <label for="age">Age</label>
                             <input id="age" class="pure-u-23-24" type="text">
                         </div>
 
                         <div class="pure-u-1 pure-u-md-1-3">
+=======
+>>>>>>> 0ef5c58972ca5f24dd008b858b970caeac857826
                             <label for="state">State</label>
                             <select id="state" class="pure-input-1-2">
                                 <option>AL</option>
@@ -56,6 +63,7 @@
                                 <option>IL</option>
                             </select>
                         </div>
+<<<<<<< HEAD
 
                         <div class="pure-u-1 pure-u-md-1-3">
                             <label for="password1">Password </label>
@@ -65,6 +73,8 @@
                             <label for="password2">Password Again </label>
                             <input id="password2" class="pure-u-23-24" type="password">
                         </div>
+=======
+>>>>>>> 0ef5c58972ca5f24dd008b858b970caeac857826
                     </div>
 
                     <label for="terms" class="pure-checkbox">
@@ -86,25 +96,40 @@
         $("#register").submit(function (event) {
             event.preventDefault();
 
+<<<<<<< HEAD
 
             // form.serialize
             var form_data = {
                 'route':'register',
+=======
+            // form.serialize
+            var form_data = {
+>>>>>>> 0ef5c58972ca5f24dd008b858b970caeac857826
                 'first-name': $('#first-name').val(),
                 'last-name': $('#last-name').val(),
                 'email': $('#email').val(),
                 'city': $('#city').val(),
+<<<<<<< HEAD
                 'age': $('#age').val(),
                 'state': $('#state').val(),
                 'password1': $('#password1').val(),
                 'password2': $('#password2').val()
+=======
+                'state': $('#state').val()
+>>>>>>> 0ef5c58972ca5f24dd008b858b970caeac857826
             }
             console.log(JSON.stringify(form_data));
 
 
+<<<<<<< HEAD
             $.post("http://terrywgriffin.com/api/v1/", form_data)
                 .done(function (data) {
                     console.log(data);
+=======
+            $.post("api.php", form_data)
+                .done(function (data) {
+                    console.log("Data Loaded: " + data);
+>>>>>>> 0ef5c58972ca5f24dd008b858b970caeac857826
                 });
         });
 

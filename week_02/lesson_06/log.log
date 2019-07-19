@@ -22,6 +22,7 @@ Array
     [city] => san francisco
     [state] => AL
 )
+<<<<<<< HEAD
 16/07/2019 03:52:4916/07/2019 03:52:49Array
 (
     [first-name] => adsfads
@@ -165,3 +166,6 @@ Array
     [city] => san fran
     [state] => AL
 )
+=======
+hello world
+>>>>>>> 0ef5c58972ca5f24dd008b858b970caeac857826
