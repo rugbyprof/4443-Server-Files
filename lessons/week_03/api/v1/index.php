@@ -1,31 +1,32 @@
 <?php
 
 // required headers
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: access");
-//header("Access-Control-Allow-Methods: GET");
-header("Access-Control-Allow-Credentials: true");
-header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: * ");
+header("Content-Type: application/json");
+header("Access-Control-Allow-Methods: POST, GET");
+header("Access-Control-Max-Age: 3600");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-require('config.php');
 
+require "config.php";
+require "vendor/autoload.php";
+use \Firebase\JWT\JWT;
 
 // Put all data sources together (POST AND GET)
 $requestData = gatherRequestData();
-
-build_response($requestData);
 
 // Associative array of routes with general info about each route.
 // Really used to help document our API
 $routes = [
     'POST' => [
-        ['route'=>"register",'params'=>['data'=>'json'],'handler'=>doRegister],
-        ['route'=>"user",'params'=>['data'=>'json'],'handler'=>postUsers],
+        ['route'=>"register",'params'=>['data'=>'json'],'handler'=>"doRegister"],
+        ['route'=>"user",'params'=>['data'=>'json'],'handler'=>"postUsers"]
     ],
     'GET' => [
-        ['route'=>"user",'params'=>['id'=>'string'],'handler'=>getUsers],
-        ['route'=>"menu",'params'=>['id'=>'int'],'handler'=>getMenus],
-        ['route'=>"hash",'params'=>['val'=>'string'],'handler'=>getHash]
+        ['route'=>"user",'params'=>['id'=>'string'],'handler'=>"getUsers"],
+        ['route'=>"menu",'params'=>['id'=>'int'],'handler'=>"getMenus"],
+        ['route'=>"hash",'params'=>['val'=>'string'],'handler'=>"getHash"],
+        ['route'=>"auth",'params'=>['email'=>'string','password'=>'string'],'handler'=>"getAuth"]
     ]
 ];
 
@@ -38,7 +39,7 @@ if (mysqli_connect_errno()) {
 }
 
 // No route picked? Show available routes.
-if (!$requestData['route']) {
+if (!array_key_exists('route',$requestData)) {
     show_routes();
     exit;
 }
@@ -88,20 +89,32 @@ function getHandler($method,$route_name){
  * @return array $reqestData
  */
 function gatherRequestData(){
+
+    global $secret_key; // needed for jwt
+
     // Build a container for our request data from client 
     $requestData = ['params'=>[]];
     $non_param = ['method','route'];
 
     // Determine actual method since we are putting GET and POST 
     // data into single container
-    $requestData['method'] = $_SERVER['REQUEST_METHOD'];
+    if(isset($_SERVER['REQUEST_METHOD'])){
+        $requestData['method'] = $_SERVER['REQUEST_METHOD'];
+    }
 
+    // Not fully implemented
+    // https://www.techiediaries.com/php-jwt-authentication-tutorial/
+    $requestData['bearer'] = getBearerToken();
 
+    $decoded = JWT::decode($requestData['bearer'], $secret_key, array('HS256'));
+
+    build_response($decoded);
+    
     // Attempt to read raw input from client 
     $_INPUT = json_decode(file_get_contents("php://input"),true);
     
     // If we got the raw input, good otherwise check POST array
-    if(sizeof($_INPUT) > 0){
+    if(is_array($_INPUT)){
         foreach($_INPUT as $key => $value){
             if(!in_array($key,$non_param)){
                 $requestData['params'][$key] = $value;
@@ -127,10 +140,8 @@ function gatherRequestData(){
             $requestData[$key] = $value;
         }
     }
-    //build_response($requestData);
-
-
-    $requestData['auth'] = $_SERVER['PHP_AUTH_DIGEST'];
+    
+    build_response($requestData);
 
     // Return our data
     return $requestData;
@@ -146,8 +157,16 @@ function show_routes($inroute=null)
 {
     global $routes;
 
-    $scheme = $_SERVER['REQUEST_SCHEME'];   // gets http or https
-    $host = $_SERVER['HTTP_HOST'];          // gets domain name (or ip address)
+    if(array_key_exists('REQUEST_SCHEME',$_SERVER)){
+        $scheme = $_SERVER['REQUEST_SCHEME'];   // gets http or https
+    }else{
+        $scheme = '';
+    }
+    if(array_key_exists('HTTP_HOST',$_SERVER)){
+        $host = $_SERVER['HTTP_HOST'];          // gets domain name (or ip address)
+    }else{
+        $host = 'localhost/';
+    }
     $script = $_SERVER['PHP_SELF'];         // gets name of 'this' file
 
     $prefix = "{$scheme}://{$host}{$script}"; //http://terrywgriffin.com/api.php
@@ -193,12 +212,70 @@ function getHash($params,$return_response=true){
         $val = $params['val'];
     }
 
-    //$hash = password_hash($val, PASSWORD_DEFAULT);
-    $hash = md5($val);
+    $hash = password_hash($val, PASSWORD_BCRYPT);
+    //$hash = md5($val);
     if ($return_response) {
         build_response($hash, true);
     }
     return $hash;
+}
+
+function getAuth($data){
+    global $conn;
+
+    if(!array_key_exists('email',$data) || !array_key_exists('password',$data)){
+        build_response([],false,'Error: getAuth needs email and password!');
+    }else{
+        $email = $data['email'];
+        $password = $data['password'];
+    }
+
+    // Create SQL statement
+    $sql = "SELECT * FROM `users` where email like '{$email}';";
+
+    $result = $conn->query($sql);
+
+    // User exists because email was correct
+    if ($result->num_rows > 0) {
+        // output data of each row
+        $row = $result->fetch_assoc(); 
+        // check password
+
+        if(password_verify($password, $row['password'])){
+            build_response([],true);
+        }
+
+    }
+
+    build_response([],false,"Error: Failed to authenticate.");
+    
+}
+
+function buildJWT($data){
+
+    global $secret_key; // included in config file
+
+    if(array_key_exists('HTTP_HOST',$_SERVER)){
+        $host = $_SERVER['HTTP_HOST'];          // gets domain name (or ip address)
+    }else{
+        $host = 'localhost/';
+    }
+
+    $issuer_claim = $host;   // this can be the servername
+    $audience_claim = "profgriffin-api"; // target audience
+    $issuedat_claim = time(); // issued at
+    $notbefore_claim = $issuedat_claim + 10; //not before in seconds
+    $expire_claim = $issuedat_claim + 60 * 15; // expire time 15 minutes
+    $token = array(
+        "iss" => $issuer_claim,
+        "aud" => $audience_claim,
+        "iat" => $issuedat_claim,
+        "nbf" => $notbefore_claim,
+        "exp" => $expire_claim,
+        "data" => $data
+    );
+
+    return JWT::encode($token, $secret_key);
 }
 
 function getUser(){
@@ -221,6 +298,7 @@ function postUsers($data){
         //build_response(print_r($user,true));
 
         $hashed = md5($user['password']);
+        $hashed = getHash($params,false);
 
         $fname = $user['first_name'];
         $lname = $user['last_name'];
@@ -319,6 +397,9 @@ function build_response($response,$success=true,$error="")
     
     $response_data['success'] = $success;
     $response_data['data'] = $response;
+    
+    $response_data['jwt'] = buildJWT(['token'=>'test']);
+    
     echo json_encode($response_data);
     exit;
 }
@@ -333,4 +414,41 @@ function build_response($response,$success=true,$error="")
  */
 function logg($stuff){
     file_put_contents('log.log',print_R($stuff),true);
+}
+
+
+//https://stackoverflow.com/questions/40582161/how-to-properly-use-bearer-tokens
+/** 
+ * Get header Authorization
+ * */
+function getAuthorizationHeader(){
+    $headers = null;
+    if (isset($_SERVER['Authorization'])) {
+        $headers = trim($_SERVER["Authorization"]);
+    }
+    else if (isset($_SERVER['HTTP_AUTHORIZATION'])) { //Nginx or fast CGI
+        $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
+    } elseif (function_exists('apache_request_headers')) {
+        $requestHeaders = apache_request_headers();
+        // Server-side fix for bug in old Android versions (a nice side-effect of this fix means we don't care about capitalization for Authorization)
+        $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
+        //print_r($requestHeaders);
+        if (isset($requestHeaders['Authorization'])) {
+            $headers = trim($requestHeaders['Authorization']);
+        }
+    }
+    return $headers;
+}
+/**
+* get access token from header
+* */
+function getBearerToken() {
+    $headers = getAuthorizationHeader();
+    // HEADER: Get the access token from the header
+    if (!empty($headers)) {
+        if (preg_match('/Bearer\s(\S+)/', $headers, $matches)) {
+            return $matches[1];
+        }
+    }
+    return null;
 }

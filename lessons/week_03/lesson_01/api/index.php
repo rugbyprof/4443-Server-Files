@@ -9,11 +9,10 @@ header('Content-Type: application/json');
 
 require('config.php');
 
-
 // Put all data sources together (POST AND GET)
 $requestData = gatherRequestData();
 
-build_response($requestData);
+//build_response($requestData);
 
 // Associative array of routes with general info about each route.
 // Really used to help document our API
@@ -128,9 +127,6 @@ function gatherRequestData(){
         }
     }
     //build_response($requestData);
-
-
-    $requestData['auth'] = $_SERVER['PHP_AUTH_DIGEST'];
 
     // Return our data
     return $requestData;
