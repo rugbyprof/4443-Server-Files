@@ -1,0 +1,171 @@
+Array
+(
+    [first-name] => don
+    [last-name] => juan
+    [email] => don.juan@somewhere.com
+    [city] => san francisco
+    [state] => AL
+)
+Array
+(
+    [first-name] => don
+    [last-name] => juan
+    [email] => don.juan@somewhere.com
+    [city] => san francisco
+    [state] => AL
+)
+15/07/2019 04:04:5215/07/2019 04:04:52Array
+(
+    [first-name] => don
+    [last-name] => juan
+    [email] => don.juan@somewhere.com
+    [city] => san francisco
+    [state] => AL
+)
+<<<<<<< HEAD
+16/07/2019 03:52:4916/07/2019 03:52:49Array
+(
+    [first-name] => adsfads
+    [last-name] => asdad
+    [email] => adsfafdsf@asdfadf
+    [city] => asdfasf
+    [state] => CA
+)
+16/07/2019 03:54:5316/07/2019 03:54:53Array
+(
+    [first-name] => adsfads
+    [last-name] => asdad
+    [email] => adsfafdsf@asdfadf
+    [city] => asdfasf
+    [state] => CA
+)
+16/07/2019 03:57:4316/07/2019 03:57:43Array
+(
+    [first-name] => adsfads
+    [last-name] => asdad
+    [email] => adsfafdsf@asdfadf
+    [city] => asdfasf
+    [state] => CA
+)
+16/07/2019 03:57:4516/07/2019 03:57:45Array
+(
+    [first-name] => adsfads
+    [last-name] => asdad
+    [email] => adsfafdsf@asdfadf
+    [city] => asdfasf
+    [state] => CA
+)
+16/07/2019 03:58:1916/07/2019 03:58:19Array
+(
+    [first-name] => adsfads
+    [last-name] => asdad
+    [email] => adsfafdsf@asdfadf
+    [city] => asdfasf
+    [state] => CA
+)
+16/07/2019 04:00:4916/07/2019 04:00:49Array
+(
+    [first-name] => adsfads
+    [last-name] => asdad
+    [email] => adsfafdsf@asdfadf
+    [city] => asdfasf
+    [state] => CA
+)
+16/07/2019 04:03:3516/07/2019 04:03:35Array
+(
+    [first-name] => adsfads
+    [last-name] => asdad
+    [email] => adsfafdsf@asdfadf
+    [city] => asdfasf
+    [state] => CA
+)
+16/07/2019 04:05:0116/07/2019 04:05:01Array
+(
+    [first-name] => austin
+    [last-name] => morris
+    [email] => pleaseshut@up
+    [city] => death valley
+    [state] => CA
+)
+16/07/2019 04:25:1716/07/2019 04:25:17Array
+(
+    [first-name] => austin
+    [last-name] => morris
+    [email] => pleaseshut@up
+    [city] => death valley
+    [state] => CA
+)
+16/07/2019 04:25:3816/07/2019 04:25:38Array
+(
+    [first-name] => austin
+    [last-name] => morris
+    [email] => pleaseshut@up
+    [city] => death valley
+    [state] => CA
+)
+16/07/2019 04:25:5116/07/2019 04:25:51Array
+(
+    [first-name] => austin
+    [last-name] => morris
+    [email] => pleaseshut@up
+    [city] => death valley
+    [state] => CA
+)
+16/07/2019 04:27:5116/07/2019 04:27:51Array
+(
+    [first-name] => austin
+    [last-name] => morris
+    [email] => pleaseshut@up
+    [city] => death valley
+    [state] => CA
+)
+16/07/2019 04:30:4316/07/2019 04:30:43Array
+(
+    [first-name] => austin
+    [last-name] => morris
+    [email] => pleaseshut@up
+    [city] => death valley
+    [state] => CA
+)
+16/07/2019 04:31:0416/07/2019 04:31:04Array
+(
+)
+16/07/2019 04:31:3916/07/2019 04:31:39Array
+(
+)
+16/07/2019 04:32:4116/07/2019 04:32:41Array
+(
+    [first-name] => austin
+    [last-name] => morris
+    [email] => pleaseshut@up
+    [city] => death valley
+    [state] => CA
+)
+16/07/2019 04:33:0316/07/2019 04:33:03Array
+(
+    [first-name] => tom
+    [last-name] => tom
+    [email] => tom@tom
+    [city] => tom
+    [state] => AL
+)
+16/07/2019 04:34:0316/07/2019 04:34:03Array
+(
+    [first-name] => toim
+    [last-name] => asdf
+    [email] => 
+    [city] => asdfa
+    [state] => AL
+)
+17/07/2019 03:50:3617/07/2019 03:50:36Array
+(
+    [route] => user
+    [first-name] => joe
+    [last-name] => smith
+    [email] => tom@gmail.com
+    [city] => san fran
+    [state] => AL
+)
+=======
+hello world
+>>>>>>> 0ef5c58972ca5f24dd008b858b970caeac857826
